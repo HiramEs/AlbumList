@@ -1,6 +1,4 @@
 import {
-  View,
-  Text,
   StyleSheet,
   SafeAreaView,
   Alert,
@@ -12,6 +10,7 @@ import React, {useCallback, useEffect, useState} from 'react';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {MainStackParamList} from '../navigation/MainStackNavigation';
 import {Album} from '../utils/types/album';
+import Header from '../components/Header';
 
 type AlbumDetailsProps = NativeStackScreenProps<
   MainStackParamList,
@@ -21,7 +20,7 @@ type AlbumDetailsProps = NativeStackScreenProps<
 const {width} = Dimensions.get('screen');
 
 const AlbumDetails: React.FC<AlbumDetailsProps> = ({navigation, route}) => {
-  const {albumId} = route.params;
+  const {albumId, albumName} = route.params;
   const [album, setAlbum] = useState<Album[]>([]);
 
   const initialRequest = useCallback(async () => {
@@ -44,6 +43,11 @@ const AlbumDetails: React.FC<AlbumDetailsProps> = ({navigation, route}) => {
 
   return (
     <SafeAreaView style={styles.mainContainer}>
+      <Header
+        onBackButton={() => navigation.goBack()}
+        title={albumName}
+        onPressStar={() => null}
+      />
       {album.length > 0 && (
         <FlatList
           data={album}

@@ -4,7 +4,7 @@ import {User} from '../utils/types/user';
 
 type UserItemProps = {
   user: User;
-  onPressAlbum: (albumId: number) => void;
+  onPressAlbum: (albumId: number, albumName: string) => void;
 };
 
 const UserItem: React.FC<UserItemProps> = ({user, onPressAlbum}) => {
@@ -41,7 +41,7 @@ const UserItem: React.FC<UserItemProps> = ({user, onPressAlbum}) => {
       </View>
       {albums.map(({title, id}) => (
         <TouchableOpacity
-          onPress={() => onPressAlbum(id)}
+          onPress={() => onPressAlbum(id, title)}
           style={styles.albumsContainer}
           key={id}>
           <View style={styles.albumItem}>

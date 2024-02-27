@@ -4,6 +4,7 @@ import UserItem from '../components/UserItem';
 import {User} from '../utils/types/user';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {MainStackParamList} from '../navigation/MainStackNavigation';
+import Header from '../components/Header';
 
 type MainScreenProps = NativeStackScreenProps<MainStackParamList, 'MainScreen'>;
 
@@ -27,6 +28,7 @@ const MainScreen: React.FC<MainScreenProps> = ({navigation}) => {
 
   return (
     <SafeAreaView style={styles.mainContainer}>
+      <Header title="Music!" />
       {users.length > 0 && (
         <FlatList
           data={users}
@@ -34,8 +36,8 @@ const MainScreen: React.FC<MainScreenProps> = ({navigation}) => {
           renderItem={({item}) => (
             <UserItem
               user={item}
-              onPressAlbum={(albumId: number) =>
-                navigation.navigate('AlbumDetails', {albumId})
+              onPressAlbum={(albumId: number, albumName: string) =>
+                navigation.navigate('AlbumDetails', {albumId, albumName})
               }
             />
           )}

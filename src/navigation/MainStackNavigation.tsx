@@ -6,7 +6,7 @@ import AlbumDetails from '../screens/AlbumDetails';
 
 export type MainStackParamList = {
   MainScreen: undefined;
-  AlbumDetails: {albumId: number};
+  AlbumDetails: {albumId: number; albumName: string};
 };
 
 const MainStack = createNativeStackNavigator<MainStackParamList>();
@@ -14,7 +14,7 @@ const MainStack = createNativeStackNavigator<MainStackParamList>();
 const MainStackNavigation = () => {
   return (
     <NavigationContainer>
-      <MainStack.Navigator screenOptions={{}}>
+      <MainStack.Navigator screenOptions={{headerShown: false}}>
         <MainStack.Screen name="MainScreen" component={MainScreen} />
         <MainStack.Screen name="AlbumDetails" component={AlbumDetails} />
       </MainStack.Navigator>
