@@ -1,4 +1,4 @@
-## Step 1: Start the Metro Server
+## Step 1: Install node modules
 First, you need to install the **node_modules**.
 To start Metro, run the following command from the _root_ of your React Native project:
 
