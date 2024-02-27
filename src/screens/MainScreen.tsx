@@ -1,30 +1,21 @@
-import {SafeAreaView, StyleSheet, Alert, FlatList} from 'react-native';
-import React, {useCallback, useEffect, useState} from 'react';
+import {SafeAreaView, StyleSheet, FlatList} from 'react-native';
+import React, {useEffect} from 'react';
 import UserItem from '../components/UserItem';
-import {User} from '../utils/types/user';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {MainStackParamList} from '../navigation/MainStackNavigation';
 import Header from '../components/Header';
+import {fetchUsers} from '../services/users';
+import {useAppDispatch, useAppSelector} from '../../store';
 
 type MainScreenProps = NativeStackScreenProps<MainStackParamList, 'MainScreen'>;
 
 const MainScreen: React.FC<MainScreenProps> = ({navigation}) => {
-  const [users, setUsers] = useState<User[]>([]);
-
-  const initialRequest = useCallback(async () => {
-    const result = await fetch('https://jsonplaceholder.typicode.com/users', {
-      method: 'GET',
-    })
-      .then(res => res.json())
-      .catch(err => {
-        Alert.alert(err);
-      });
-    setUsers(result);
-  }, []);
+  const {users} = useAppSelector(state => state.users);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    initialRequest();
-  }, [initialRequest]);
+    dispatch(fetchUsers());
+  }, [dispatch]);
 
   return (
     <SafeAreaView style={styles.mainContainer}>
@@ -52,6 +43,6 @@ export default MainScreen;
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
-    backgroundColor: 'gray',
+    backgroundColor: 'white',
   },
 });

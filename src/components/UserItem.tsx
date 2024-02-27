@@ -1,6 +1,7 @@
 import {View, Text, StyleSheet, Alert, TouchableOpacity} from 'react-native';
 import React, {useCallback, useEffect, useState} from 'react';
 import {User} from '../utils/types/user';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 type UserItemProps = {
   user: User;
@@ -15,6 +16,11 @@ const UserItem: React.FC<UserItemProps> = ({user, onPressAlbum}) => {
       title: string;
     }[]
   >([]);
+
+  const onDelete = (albumId: number) => {
+    const filtered = albums.filter(item => item.id !== albumId);
+    setAlbums(filtered);
+  };
 
   const initialRequest = useCallback(async () => {
     const result = await fetch(
@@ -46,7 +52,14 @@ const UserItem: React.FC<UserItemProps> = ({user, onPressAlbum}) => {
           key={id}>
           <View style={styles.albumItem}>
             <Text style={styles.albumName}>{title}</Text>
-            <Text>X</Text>
+            <View style={styles.delete}>
+              <Icon
+                name="close-outline"
+                size={25}
+                color={'white'}
+                onPress={() => onDelete(id)}
+              />
+            </View>
           </View>
         </TouchableOpacity>
       ))}
@@ -82,7 +95,7 @@ const styles = StyleSheet.create({
   },
   albumItem: {
     flexDirection: 'row',
-    width: '80%',
+    width: '90%',
     minHeight: 40,
     borderRadius: 10,
     borderWidth: 1,
@@ -90,11 +103,16 @@ const styles = StyleSheet.create({
     backgroundColor: 'black',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: 20,
+    paddingLeft: 20,
   },
   albumName: {
     color: 'white',
     fontSize: 20,
     fontWeight: '400',
+    flex: 5,
+  },
+  delete: {
+    flex: 1,
+    alignItems: 'center',
   },
 });

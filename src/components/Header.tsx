@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import React from 'react';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const {width} = Dimensions.get('screen');
 
@@ -13,14 +14,20 @@ type HeaderProps = {
   title: string;
   onBackButton?: () => void;
   onPressStar?: () => void;
+  starSelected?: boolean;
 };
 
-const Header: React.FC<HeaderProps> = ({title, onBackButton, onPressStar}) => {
+const Header: React.FC<HeaderProps> = ({
+  title,
+  onBackButton,
+  onPressStar,
+  starSelected,
+}) => {
   return (
     <View style={styles.container}>
       {onBackButton && (
         <TouchableOpacity onPress={onBackButton} style={styles.backContainer}>
-          <Text>{'<'}</Text>
+          <Icon name="chevron-back" size={25} />
         </TouchableOpacity>
       )}
       <View style={styles.titleContainer}>
@@ -30,7 +37,11 @@ const Header: React.FC<HeaderProps> = ({title, onBackButton, onPressStar}) => {
       </View>
       {onPressStar && (
         <View style={styles.backContainer}>
-          <Text>Star</Text>
+          <Icon
+            name={starSelected ? 'star' : 'star-outline'}
+            size={25}
+            onPress={onPressStar}
+          />
         </View>
       )}
     </View>
@@ -52,6 +63,7 @@ const styles = StyleSheet.create({
   title: {
     textAlign: 'center',
     paddingHorizontal: 40,
+    fontSize: 30,
   },
   backContainer: {
     justifyContent: 'center',
