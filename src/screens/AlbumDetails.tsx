@@ -12,6 +12,7 @@ import Header from '../components/Header';
 import {fetchPhotos} from '../services/photos';
 import {useAppDispatch, useAppSelector} from '../../store';
 import {fetchAlbum} from '../services/album';
+import Loading from '../components/Loading';
 
 type AlbumDetailsProps = NativeStackScreenProps<
   MainStackParamList,
@@ -23,7 +24,7 @@ const {width} = Dimensions.get('screen');
 const AlbumDetails: React.FC<AlbumDetailsProps> = ({navigation, route}) => {
   const {albumId, albumName} = route.params;
   const {photos} = useAppSelector(state => state.photos);
-  const {album} = useAppSelector(state => state.album);
+  const {album, loading} = useAppSelector(state => state.album);
   const dispatch = useAppDispatch();
 
   const [isPhotoMode, setPhotoMode] = useState<boolean>(false);
@@ -37,12 +38,16 @@ const AlbumDetails: React.FC<AlbumDetailsProps> = ({navigation, route}) => {
     dispatch(fetchPhotos());
   }, [dispatch, albumId]);
 
+  if (loading) {
+    return <Loading />;
+  }
+
   return (
     <SafeAreaView style={styles.mainContainer}>
       <Header
         onBackButton={() => navigation.goBack()}
         starSelected={isPhotoMode}
-        title={albumName}
+        title={isPhotoMode ? 'All photos' : albumName}
         onPressStar={onPhotoMode}
       />
       {!isPhotoMode && album && album.length > 0 && (

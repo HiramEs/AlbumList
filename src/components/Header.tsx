@@ -53,7 +53,7 @@ export default Header;
 const styles = StyleSheet.create({
   container: {
     width,
-    height: 60,
+    minHeight: 60,
     flexDirection: 'row',
   },
   titleContainer: {
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
   title: {
     textAlign: 'center',
     paddingHorizontal: 40,
-    fontSize: 30,
+    fontSize: 20,
   },
   backContainer: {
     justifyContent: 'center',

@@ -6,16 +6,21 @@ import {MainStackParamList} from '../navigation/MainStackNavigation';
 import Header from '../components/Header';
 import {fetchUsers} from '../services/users';
 import {useAppDispatch, useAppSelector} from '../../store';
+import Loading from '../components/Loading';
 
 type MainScreenProps = NativeStackScreenProps<MainStackParamList, 'MainScreen'>;
 
 const MainScreen: React.FC<MainScreenProps> = ({navigation}) => {
-  const {users} = useAppSelector(state => state.users);
+  const {users, loading} = useAppSelector(state => state.users);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(fetchUsers());
   }, [dispatch]);
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <SafeAreaView style={styles.mainContainer}>
